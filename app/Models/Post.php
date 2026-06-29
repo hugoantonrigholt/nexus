@@ -57,4 +57,9 @@ class Post extends Model
     {
         return !$this->isPublished();
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }
