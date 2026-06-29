@@ -20,7 +20,7 @@ export default function PostForm({
   sectors: any[]
 }) {
   const [content, setContent] = useState(post?.body || '')
-  const { data, setData, post: submit, processing, errors } = useForm({
+  const { data, setData, post: postForm, patch, processing, errors } = useForm({
     title: post?.title || '',
     body: content,
     ticker: post?.ticker || '',
@@ -31,17 +31,24 @@ export default function PostForm({
 
   const handleSubmit = (e: React.FormEvent, publish: boolean) => {
     e.preventDefault()
-    const submitData = { ...data, body: content, publish }
 
     if (post) {
-      submit('patch', `/posts/${post.slug}`, submitData)
+      patch(`/posts/${post.slug}`, {
+        ...data,
+        body: content,
+        publish,
+      })
     } else {
-      submit('post', '/posts', submitData)
+      postForm(`/posts`, {
+        ...data,
+        body: content,
+        publish,
+      })
     }
   }
 
   return (
-    <form className="space-y-6">
+    <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
       <div>
         <Label htmlFor="title">Title</Label>
         <Input
