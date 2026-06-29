@@ -15,26 +15,29 @@ import {
 export default function PostForm({
   post,
   sectors,
-  onSubmit,
 }: {
   post?: any
   sectors: any[]
-  onSubmit: (data: any) => void
 }) {
   const [content, setContent] = useState(post?.body || '')
-  const { data, setData, processing, errors } = useForm({
+  const { data, setData, post: submit, processing, errors } = useForm({
     title: post?.title || '',
     body: content,
     ticker: post?.ticker || '',
     sector_id: post?.sector_id || '',
     visibility: post?.visibility || 'members_only',
+    publish: false,
   })
 
   const handleSubmit = (e: React.FormEvent, publish: boolean) => {
     e.preventDefault()
-    setData('body', content)
-    setData('publish', publish)
-    onSubmit({ ...data, body: content, publish })
+    const submitData = { ...data, body: content, publish }
+
+    if (post) {
+      submit('patch', `/posts/${post.slug}`, submitData)
+    } else {
+      submit('post', '/posts', submitData)
+    }
   }
 
   return (
@@ -74,11 +77,12 @@ export default function PostForm({
 
         <div>
           <Label htmlFor="sector">Sector (optional)</Label>
-          <Select value={data.sector_id} onValueChange={(val) => setData('sector_id', val)}>
+          <Select value={String(data.sector_id)} onValueChange={(val) => setData('sector_id', val)}>
             <SelectTrigger id="sector">
               <SelectValue placeholder="Select sector" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="">None</SelectItem>
               {sectors.map((sector) => (
                 <SelectItem key={sector.id} value={String(sector.id)}>
                   {sector.name}

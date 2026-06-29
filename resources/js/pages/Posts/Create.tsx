@@ -1,12 +1,8 @@
-import { Head, router } from '@inertiajs/react'
+import { Head } from '@inertiajs/react'
 import AppLayout from '@/layouts/app-layout'
 import PostForm from '@/components/post-form'
 
 export default function Create({ sectors }: { sectors: any[] }) {
-  const handleSubmit = (data: any) => {
-    router.post('/posts', data)
-  }
-
   return (
     <>
       <Head title="New Post" />
@@ -18,7 +14,7 @@ export default function Create({ sectors }: { sectors: any[] }) {
               Share your research and insights with the community.
             </p>
           </div>
-          <PostForm sectors={sectors} onSubmit={handleSubmit} />
+          <PostForm sectors={sectors} />
         </div>
       </AppLayout>
     </>
