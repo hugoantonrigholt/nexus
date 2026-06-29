@@ -28,6 +28,7 @@ class CreateThesisArticles extends Command
                     'ticker' => $card->ticker,
                     'title' => "{$card->ticker} - {$card->company_name} Research",
                     'body' => $card->content,
+                    'type' => 'imported',
                     'published_at' => now(),
                 ]
             );

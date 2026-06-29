@@ -62,6 +62,11 @@ export default function Show({ post }: { post: any }) {
             </div>
 
             <div className="flex gap-2 flex-wrap">
+              {post.type === 'imported' && (
+                <span className="inline-block px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-medium">
+                  Research
+                </span>
+              )}
               {post.ticker && (
                 <span className="inline-block px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
                   {post.ticker}
@@ -91,24 +96,27 @@ export default function Show({ post }: { post: any }) {
             )}
           </header>
 
-          {/* Macro & Framework Connections */}
-          {post.macro_framework && (
-            <div className="mb-8 border-l-4 border-blue-500 bg-blue-50 px-6 py-5 rounded-r-lg">
-              <h3 className="font-bold text-sm text-blue-900 mb-4 uppercase tracking-wide">📊 Macro & Framework</h3>
-              <div className="text-slate-800 leading-7 whitespace-pre-wrap font-serif text-base">
-                {post.macro_framework}
-              </div>
-            </div>
-          )}
+          {/* Extracted Sections (Imported Articles Only) */}
+          {post.type === 'imported' && (
+            <>
+              {post.macro_framework && (
+                <div className="mb-8 border-l-4 border-blue-500 bg-blue-50 px-6 py-5 rounded-r-lg">
+                  <h3 className="font-bold text-sm text-blue-900 mb-4 uppercase tracking-wide">📊 Macro & Framework</h3>
+                  <div className="text-slate-800 leading-7 whitespace-pre-wrap font-serif text-base">
+                    {post.macro_framework}
+                  </div>
+                </div>
+              )}
 
-          {/* Consensus Thesis */}
-          {post.consensus_thesis && (
-            <div className="mb-8 border-l-4 border-green-500 bg-green-50 px-6 py-5 rounded-r-lg">
-              <h3 className="font-bold text-sm text-green-900 mb-4 uppercase tracking-wide">✅ Consensus Thesis</h3>
-              <div className="text-slate-800 leading-7 whitespace-pre-wrap font-serif text-base">
-                {post.consensus_thesis}
-              </div>
-            </div>
+              {post.consensus_thesis && (
+                <div className="mb-8 border-l-4 border-green-500 bg-green-50 px-6 py-5 rounded-r-lg">
+                  <h3 className="font-bold text-sm text-green-900 mb-4 uppercase tracking-wide">✅ Consensus Thesis</h3>
+                  <div className="text-slate-800 leading-7 whitespace-pre-wrap font-serif text-base">
+                    {post.consensus_thesis}
+                  </div>
+                </div>
+              )}
+            </>
           )}
 
           <div className="mb-12 max-w-2xl">

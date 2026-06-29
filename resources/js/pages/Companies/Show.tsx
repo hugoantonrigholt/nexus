@@ -104,72 +104,40 @@ export default function Show({ ticker, card, posts, sectors }: { ticker: string;
           )}
 
           {/* Research Articles */}
-          <div className="space-y-12">
+          <div className="mt-12">
+            <h2 className="text-2xl font-serif font-bold mb-6">Research Articles</h2>
+
             {posts.data.length > 0 ? (
-              posts.data.map((post: any) => (
-                <article key={post.id} className="border-b pb-12 last:border-b-0">
-                  <div className="mb-6">
-                    <Link
-                      href={`/posts/${post.slug}`}
-                      className="group"
-                    >
-                      <h2 className="text-3xl font-serif font-bold mb-3 text-slate-900 group-hover:text-blue-600 transition">
-                        {post.title}
-                      </h2>
-                    </Link>
-                    <div className="flex items-center gap-4 text-sm text-slate-600">
-                      <span>{new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                      {post.stance && (
-                        <span className="font-medium px-3 py-1 rounded-full bg-slate-100 text-slate-700">
-                          {post.stance}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Macro & Framework Connections */}
-                  {post.macro_framework && (
-                    <div className="mb-8 border-l-4 border-blue-500 bg-blue-50 px-6 py-5 rounded-r-lg">
-                      <h3 className="font-bold text-sm text-blue-900 mb-4 uppercase tracking-wide">📊 Macro & Framework</h3>
-                      <div className="text-slate-800 leading-7 whitespace-pre-wrap font-serif text-base">
-                        {post.macro_framework}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Consensus Thesis */}
-                  {post.consensus_thesis && (
-                    <div className="mb-8 border-l-4 border-green-500 bg-green-50 px-6 py-5 rounded-r-lg">
-                      <h3 className="font-bold text-sm text-green-900 mb-4 uppercase tracking-wide">✅ Consensus Thesis</h3>
-                      <div className="text-slate-800 leading-7 whitespace-pre-wrap font-serif text-base">
-                        {post.consensus_thesis}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Full Article Preview */}
-                  {post.body && (
-                    <div className="mb-6">
-                      <div className="text-slate-800 leading-8 whitespace-pre-wrap font-serif text-base max-w-2xl">
-                        {post.body.split('\n').slice(0, 20).join('\n')}
-                        {post.body.split('\n').length > 20 && (
-                          <div className="mt-6">
-                            <Link
-                              href={`/posts/${post.slug}`}
-                              className="inline-block px-6 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition"
-                            >
-                              Read Full Article →
-                            </Link>
-                          </div>
+              <div className="space-y-3">
+                {posts.data.map((post: any) => (
+                  <Link
+                    key={post.id}
+                    href={`/posts/${post.slug}`}
+                    className="flex items-center justify-between p-4 hover:bg-slate-50 border rounded transition"
+                  >
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-slate-900 hover:text-blue-600">{post.title}</h3>
+                      <div className="flex items-center gap-3 mt-2 text-sm text-slate-600">
+                        <span>{new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                        {post.stance && (
+                          <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-xs font-medium">
+                            {post.stance}
+                          </span>
+                        )}
+                        {post.type === 'imported' && (
+                          <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-700 text-xs font-medium">
+                            Research
+                          </span>
                         )}
                       </div>
                     </div>
-                  )}
-                </article>
-              ))
+                    <div className="text-slate-400 ml-4">→</div>
+                  </Link>
+                ))}
+              </div>
             ) : (
-              <div className="text-center py-16">
-                <p className="text-slate-600 text-lg">No research articles found for this ticker.</p>
+              <div className="text-center py-8 text-slate-600">
+                No research articles found for this ticker.
               </div>
             )}
           </div>

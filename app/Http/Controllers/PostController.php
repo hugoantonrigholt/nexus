@@ -51,6 +51,7 @@ class PostController extends Controller
             'ticker' => $validated['ticker'],
             'sector_id' => $validated['sector_id'],
             'visibility' => $validated['visibility'],
+            'type' => 'internal',
             'published_at' => $validated['publish'] ? now() : null,
         ]);
 

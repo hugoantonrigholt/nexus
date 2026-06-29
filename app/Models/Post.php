@@ -23,7 +23,7 @@ use Illuminate\Support\Carbon;
  * @property-read Sector|null $sector
  * @property-read Collection<int, Comment> $comments
  */
-#[Fillable(['user_id', 'title', 'slug', 'body', 'ticker', 'stance', 'sector_id', 'visibility', 'published_at', 'macro_framework', 'consensus_thesis'])]
+#[Fillable(['user_id', 'title', 'slug', 'body', 'ticker', 'stance', 'sector_id', 'visibility', 'type', 'published_at', 'macro_framework', 'consensus_thesis'])]
 class Post extends Model
 {
     protected function casts(): array
