@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useForm } from '@inertiajs/react'
+import { router } from '@inertiajs/react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
@@ -19,31 +19,30 @@ export default function PostForm({
   post?: any
   sectors: any[]
 }) {
+  const [title, setTitle] = useState(post?.title || '')
   const [content, setContent] = useState(post?.body || '')
-  const { data, setData, post: postForm, patch, processing, errors } = useForm({
-    title: post?.title || '',
-    body: content,
-    ticker: post?.ticker || '',
-    sector_id: post?.sector_id || '',
-    visibility: post?.visibility || 'members_only',
-    publish: false,
-  })
+  const [ticker, setTicker] = useState(post?.ticker || '')
+  const [sectorId, setSectorId] = useState(post?.sector_id || '')
+  const [visibility, setVisibility] = useState(post?.visibility || 'members_only')
+  const [processing, setProcessing] = useState(false)
 
   const handleSubmit = (e: React.FormEvent, publish: boolean) => {
     e.preventDefault()
+    setProcessing(true)
+
+    const data = {
+      title,
+      body: content,
+      ticker,
+      sector_id: sectorId,
+      visibility,
+      publish,
+    }
 
     if (post) {
-      patch(`/posts/${post.slug}`, {
-        ...data,
-        body: content,
-        publish,
-      })
+      router.patch(`/posts/${post.slug}`, data)
     } else {
-      postForm(`/posts`, {
-        ...data,
-        body: content,
-        publish,
-      })
+      router.post('/posts', data)
     }
   }
 
@@ -54,18 +53,17 @@ export default function PostForm({
         <Input
           id="title"
           type="text"
-          value={data.title}
-          onChange={(e) => setData('title', e.target.value)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           className="mt-1"
           required
+          disabled={processing}
         />
-        {errors.title && <p className="text-red-600 text-sm mt-1">{errors.title}</p>}
       </div>
 
       <div>
         <Label>Content</Label>
         <RichEditor value={content} onChange={setContent} />
-        {errors.body && <p className="text-red-600 text-sm mt-1">{errors.body}</p>}
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -74,17 +72,18 @@ export default function PostForm({
           <Input
             id="ticker"
             type="text"
-            value={data.ticker}
-            onChange={(e) => setData('ticker', e.target.value.toUpperCase())}
+            value={ticker}
+            onChange={(e) => setTicker(e.target.value.toUpperCase())}
             placeholder="NVDA"
             className="mt-1"
             maxLength={10}
+            disabled={processing}
           />
         </div>
 
         <div>
           <Label htmlFor="sector">Sector (optional)</Label>
-          <Select value={String(data.sector_id)} onValueChange={(val) => setData('sector_id', val)}>
+          <Select value={sectorId} onValueChange={setSectorId} disabled={processing}>
             <SelectTrigger id="sector">
               <SelectValue placeholder="Select sector" />
             </SelectTrigger>
@@ -102,7 +101,7 @@ export default function PostForm({
 
       <div>
         <Label htmlFor="visibility">Visibility</Label>
-        <Select value={data.visibility} onValueChange={(val) => setData('visibility', val)}>
+        <Select value={visibility} onValueChange={setVisibility} disabled={processing}>
           <SelectTrigger id="visibility">
             <SelectValue />
           </SelectTrigger>
