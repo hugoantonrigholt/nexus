@@ -20,7 +20,7 @@ export default function PostCard({ post }: { post: any }) {
       <div className="flex flex-wrap gap-2">
         {post.ticker && (
           <Link
-            href={`/companies/${post.ticker}`}
+            href={`/company/${post.ticker.toLowerCase()}`}
             className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded font-medium hover:bg-blue-200"
           >
             {post.ticker}

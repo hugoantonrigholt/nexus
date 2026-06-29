@@ -126,9 +126,16 @@ export default function Show({ post }: { post: any }) {
           )}
 
           <div className="mb-12 max-w-2xl">
-            <div className="text-slate-800 leading-8 font-serif text-base whitespace-pre-wrap">
-              {post.body}
-            </div>
+            {post.type === 'imported' ? (
+              <div className="text-slate-800 leading-8 font-serif text-base whitespace-pre-wrap">
+                {post.body}
+              </div>
+            ) : (
+              <div
+                className="prose prose-lg max-w-none text-slate-800"
+                dangerouslySetInnerHTML={{ __html: post.body }}
+              />
+            )}
           </div>
 
           {auth.user && (
