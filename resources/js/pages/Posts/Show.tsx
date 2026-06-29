@@ -56,11 +56,9 @@ export default function Show({ post }: { post: any }) {
                 </span>
               )}
               {post.sector && (
-                <Link href={`/sectors/${post.sector.slug}`}>
-                  <span className="inline-block px-3 py-1 bg-slate-200 text-slate-800 rounded text-sm font-medium hover:bg-slate-300">
-                    {post.sector.name}
-                  </span>
-                </Link>
+                <span className="inline-block px-3 py-1 bg-slate-200 text-slate-800 rounded text-sm font-medium">
+                  {post.sector.name}
+                </span>
               )}
               <span className="inline-block px-3 py-1 bg-slate-100 text-slate-600 rounded text-sm">
                 {post.visibility === 'public' ? 'Public' : 'Members only'}

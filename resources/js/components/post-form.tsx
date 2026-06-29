@@ -22,7 +22,7 @@ export default function PostForm({
   const [title, setTitle] = useState(post?.title || '')
   const [content, setContent] = useState(post?.body || '')
   const [ticker, setTicker] = useState(post?.ticker || '')
-  const [sectorId, setSectorId] = useState(post?.sector_id || '')
+  const [sectorId, setSectorId] = useState(String(post?.sector_id || ''))
   const [visibility, setVisibility] = useState(post?.visibility || 'members_only')
   const [processing, setProcessing] = useState(false)
 
