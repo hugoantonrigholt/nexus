@@ -63,16 +63,13 @@ export default function Show({ theme, cards }: { theme: any; cards: any[] }) {
                     )}
                   </div>
 
-                  <div className="flex gap-4 mb-4 text-sm">
-                    <div>
-                      <span className="text-slate-600">Conviction</span>
-                      <div className="font-bold text-lg">{card.conviction}/5</div>
+                  {card.status && (
+                    <div className="mb-4">
+                      <span className="text-xs font-medium px-2 py-1 rounded bg-slate-100 text-slate-700">
+                        {card.status}
+                      </span>
                     </div>
-                    <div>
-                      <span className="text-slate-600">Quality</span>
-                      <div className="font-bold text-lg">{card.quality}/10</div>
-                    </div>
-                  </div>
+                  )}
 
                   <p className="text-sm text-slate-600 line-clamp-3">{card.edge}</p>
                 </Link>
