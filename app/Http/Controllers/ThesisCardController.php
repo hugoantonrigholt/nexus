@@ -109,6 +109,14 @@ class ThesisCardController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        $themes = \App\Models\Theme::orderBy('name')->get(['id', 'name', 'slug']);
+        return Inertia::render('ThesisCards/Create', [
+            'themes' => $themes,
+        ]);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -134,6 +142,15 @@ class ThesisCardController extends Controller
         ThesisCard::create($validated);
 
         return back();
+    }
+
+    public function edit(ThesisCard $card)
+    {
+        $themes = \App\Models\Theme::orderBy('name')->get(['id', 'name', 'slug']);
+        return Inertia::render('ThesisCards/Edit', [
+            'card' => $card,
+            'themes' => $themes,
+        ]);
     }
 
     public function update(Request $request, ThesisCard $card)

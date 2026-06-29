@@ -40,7 +40,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('thesis-cards/create', [ThesisCardController::class, 'create'])->name('thesis-cards.create');
     Route::post('thesis-cards', [ThesisCardController::class, 'store'])->name('thesis-cards.store');
+    Route::get('thesis-cards/{card}/edit', [ThesisCardController::class, 'edit'])->name('thesis-cards.edit');
     Route::patch('thesis-cards/{card}', [ThesisCardController::class, 'update'])->name('thesis-cards.update');
     Route::delete('thesis-cards/{card}', [ThesisCardController::class, 'destroy'])->name('thesis-cards.destroy');
 
