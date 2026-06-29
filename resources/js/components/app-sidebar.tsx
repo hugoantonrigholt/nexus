@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid, Newspaper, PenSquare } from 'lucide-react';
+import { BookOpen, FolderGit2, LayoutGrid, Newspaper, PenSquare, Settings } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -19,6 +19,7 @@ import type { NavItem } from '@/types';
 
 export function AppSidebar() {
     const page = usePage();
+    const auth = page.props.auth as any;
     const dashboardUrl = page.props.currentTeam
         ? dashboard(page.props.currentTeam.slug)
         : '/';
@@ -39,6 +40,11 @@ export function AppSidebar() {
             href: '/posts/create',
             icon: PenSquare,
         },
+        ...(auth.user?.role === 'admin' ? [{
+            title: 'Admin',
+            href: '/admin',
+            icon: Settings,
+        }] : []),
     ];
 
     const footerNavItems: NavItem[] = [
