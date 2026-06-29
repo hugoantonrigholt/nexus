@@ -9,7 +9,10 @@ class ValueChainController extends Controller
 {
     public function index()
     {
-        $chains = ValueChain::with('sector')->orderBy('order')->orderBy('name')->get();
+        $chains = ValueChain::with('sector', 'layers.entries')
+            ->orderBy('order')
+            ->orderBy('name')
+            ->get();
 
         return Inertia::render('ValueChains/Index', [
             'chains' => $chains,
@@ -18,7 +21,7 @@ class ValueChainController extends Controller
 
     public function show(ValueChain $valueChain)
     {
-        $valueChain->load('sector');
+        $valueChain->load('sector', 'layers.entries');
 
         return Inertia::render('ValueChains/Show', [
             'chain' => $valueChain,
