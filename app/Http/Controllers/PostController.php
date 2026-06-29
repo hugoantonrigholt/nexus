@@ -14,7 +14,6 @@ class PostController extends Controller
         $posts = Post::whereNotNull('published_at')
             ->with('author', 'sector')
             ->when($request->sector_id, fn($q, $v) => $q->where('sector_id', $v))
-            ->when($request->ticker, fn($q, $v) => $q->where('ticker', strtoupper($v)))
             ->latest('published_at')
             ->paginate(15)
             ->withQueryString();
@@ -22,7 +21,7 @@ class PostController extends Controller
         return Inertia::render('Posts/Index', [
             'posts' => $posts,
             'sectors' => Sector::all(),
-            'filters' => $request->only(['sector_id', 'ticker']),
+            'filters' => $request->only(['sector_id']),
         ]);
     }
 

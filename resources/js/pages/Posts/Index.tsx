@@ -12,13 +12,9 @@ import {
 import PostCard from '@/components/post-card'
 
 export default function Index({ posts, sectors, filters = {} }: { posts: any; sectors: any[]; filters?: any }) {
-  const [sectorFilter, setSectorFilter] = useState(filters.sector_id || '')
-  const [tickerFilter, setTickerFilter] = useState(filters.ticker || '')
-
-  const handleFilter = () => {
+  const handleSectorChange = (value: string) => {
     router.get('/feed', {
-      sector_id: sectorFilter || undefined,
-      ticker: tickerFilter || undefined,
+      sector_id: value || undefined,
     })
   }
 
@@ -37,38 +33,21 @@ export default function Index({ posts, sectors, filters = {} }: { posts: any; se
             </Link>
           </div>
 
-          <div className="bg-white p-4 rounded-lg border mb-6 space-y-3">
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-sm font-medium mb-1">Filter by Sector</label>
-                <Select value={sectorFilter} onValueChange={setSectorFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="All sectors" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">All sectors</SelectItem>
-                    {sectors.map((sector) => (
-                      <SelectItem key={sector.id} value={String(sector.id)}>
-                        {sector.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Filter by Ticker</label>
-                <input
-                  type="text"
-                  placeholder="e.g. NVDA"
-                  value={tickerFilter}
-                  onChange={(e) => setTickerFilter(e.target.value.toUpperCase())}
-                  className="w-full px-3 py-2 border rounded"
-                />
-              </div>
-            </div>
-            <Button onClick={handleFilter} size="sm" className="w-full">
-              Apply Filters
-            </Button>
+          <div className="bg-white p-4 rounded-lg border mb-6">
+            <label className="block text-sm font-medium mb-2">Filter by Sector</label>
+            <Select value={filters.sector_id ? String(filters.sector_id) : ''} onValueChange={handleSectorChange}>
+              <SelectTrigger>
+                <SelectValue placeholder="All sectors" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="">All sectors</SelectItem>
+                {sectors.map((sector) => (
+                  <SelectItem key={sector.id} value={String(sector.id)}>
+                    {sector.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="space-y-4">

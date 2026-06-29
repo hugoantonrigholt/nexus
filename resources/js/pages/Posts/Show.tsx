@@ -68,14 +68,20 @@ export default function Show({ post }: { post: any }) {
                 </span>
               )}
               {post.ticker && (
-                <span className="inline-block px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                <Link
+                  href={`/company/${post.ticker.toLowerCase()}`}
+                  className="inline-block px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium hover:bg-blue-200 transition"
+                >
                   {post.ticker}
-                </span>
+                </Link>
               )}
               {post.sector && (
-                <span className="inline-block px-4 py-2 bg-slate-200 text-slate-800 rounded-full text-sm font-medium">
+                <Link
+                  href={`/feed?sector_id=${post.sector.id}`}
+                  className="inline-block px-4 py-2 bg-slate-200 text-slate-800 rounded-full text-sm font-medium hover:bg-slate-300 transition"
+                >
                   {post.sector.name}
-                </span>
+                </Link>
               )}
               <span className="inline-block px-4 py-2 bg-slate-100 text-slate-700 rounded-full text-sm">
                 {post.visibility === 'public' ? '🔓 Public' : '🔒 Members only'}

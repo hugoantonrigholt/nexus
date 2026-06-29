@@ -110,12 +110,8 @@ export default function Show({ ticker, card, posts, sectors }: { ticker: string;
             {posts.data.length > 0 ? (
               <div className="space-y-3">
                 {posts.data.map((post: any) => (
-                  <Link
-                    key={post.id}
-                    href={`/posts/${post.slug}`}
-                    className="flex items-center justify-between p-4 hover:bg-slate-50 border rounded transition"
-                  >
-                    <div className="flex-1">
+                  <div key={post.id} className="flex items-center justify-between p-4 hover:bg-slate-50 border rounded transition">
+                    <Link href={`/posts/${post.slug}`} className="flex-1">
                       <h3 className="font-semibold text-slate-900 hover:text-blue-600">{post.title}</h3>
                       <div className="flex items-center gap-3 mt-2 text-sm text-slate-600">
                         <span>{new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
@@ -130,9 +126,9 @@ export default function Show({ ticker, card, posts, sectors }: { ticker: string;
                           </span>
                         )}
                       </div>
-                    </div>
-                    <div className="text-slate-400 ml-4">→</div>
-                  </Link>
+                    </Link>
+                    <Link href={`/posts/${post.slug}`} className="text-slate-400 ml-4 hover:text-slate-600">→</Link>
+                  </div>
                 ))}
               </div>
             ) : (
