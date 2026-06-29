@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
@@ -23,6 +24,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('sectors/{sector:slug}', [SectorController::class, 'show'])->name('sectors.show');
     Route::get('companies/{ticker}', [CompanyController::class, 'show'])->name('companies.show');
     Route::get('users/{user}', [UserController::class, 'show'])->name('users.show');
+
+    Route::post('posts/{post:slug}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('posts/{post:slug}/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 });
 
 Route::prefix('{current_team}')
