@@ -1,5 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid, Newspaper, PenSquare, Settings } from 'lucide-react';
+import { BookOpen, ChevronDown, FolderGit2, LayoutGrid, Newspaper, PenSquare, Settings } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -9,6 +10,8 @@ import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
+    SidebarGroup,
+    SidebarGroupLabel,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
@@ -41,16 +44,30 @@ export function AppSidebar() {
             href: '/posts/create',
             icon: PenSquare,
         },
-        ...(auth.user?.role === 'admin' ? [{
-            title: 'Admin',
+        {
+            title: 'Thesis Cards',
+            href: '/thesis-cards',
+            icon: BookOpen,
+        },
+        {
+            title: 'Value Chains',
+            href: '/value-chains',
+            icon: BookOpen,
+        },
+    ];
+
+    const adminNavItems: NavItem[] = auth.user?.role === 'admin' ? [
+        {
+            title: 'Admin Panel',
             href: '/admin',
             icon: Settings,
-        }] : []),
-    ];
+        },
+    ] : [];
 
     const sectorNavItems: NavItem[] = (sectors || []).map((sector) => ({
         title: sector.name,
         href: `/sectors/${sector.slug}`,
+        badge: sector.posts_count ?? 0,
     }));
 
     const footerNavItems: NavItem[] = [
@@ -88,7 +105,22 @@ export function AppSidebar() {
             <SidebarContent>
                 <NavMain items={mainNavItems} />
                 {sectorNavItems.length > 0 && (
-                    <NavMain items={sectorNavItems} label="Sectors" />
+                    <Collapsible defaultOpen className="group/collapsible">
+                        <SidebarGroup>
+                            <SidebarGroupLabel asChild>
+                                <CollapsibleTrigger className="flex w-full items-center justify-between px-2">
+                                    <span>Sectors</span>
+                                    <ChevronDown className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                                </CollapsibleTrigger>
+                            </SidebarGroupLabel>
+                            <CollapsibleContent>
+                                <NavMain items={sectorNavItems} label="" />
+                            </CollapsibleContent>
+                        </SidebarGroup>
+                    </Collapsible>
+                )}
+                {adminNavItems.length > 0 && (
+                    <NavMain items={adminNavItems} label="Administration" />
                 )}
             </SidebarContent>
 

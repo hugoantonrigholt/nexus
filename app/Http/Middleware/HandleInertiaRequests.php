@@ -47,7 +47,7 @@ class HandleInertiaRequests extends Middleware
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'currentTeam' => fn () => $user?->currentTeam ? $user->toUserTeam($user->currentTeam) : null,
             'teams' => fn () => $user?->toUserTeams(includeCurrent: true) ?? [],
-            'sectors' => fn () => Sector::orderBy('name')->get(['id', 'name', 'slug']),
+            'sectors' => fn () => Sector::withCount('posts')->orderBy('name')->get(['id', 'name', 'slug']),
         ];
     }
 }

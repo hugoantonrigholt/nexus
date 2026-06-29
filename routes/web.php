@@ -6,7 +6,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\Teams\TeamInvitationController;
+use App\Http\Controllers\ThesisCardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ValueChainController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +29,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('posts/{post:slug}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('posts/{post:slug}/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+    Route::get('thesis-cards', [ThesisCardController::class, 'index'])->name('thesis-cards.index');
+    Route::get('value-chains', [ValueChainController::class, 'index'])->name('value-chains.index');
+    Route::get('value-chains/{valueChain}', [ValueChainController::class, 'show'])->name('value-chains.show');
 });
 
 Route::prefix('{current_team}')
