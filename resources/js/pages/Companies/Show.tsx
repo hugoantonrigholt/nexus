@@ -104,22 +104,34 @@ export default function Show({ ticker, card, posts, sectors }: { ticker: string;
           )}
 
           {/* Research Articles */}
-          <div className="space-y-8">
+          <div className="space-y-12">
             {posts.data.length > 0 ? (
               posts.data.map((post: any) => (
-                <article key={post.id} className="border rounded-lg p-6">
-                  <div className="mb-4">
-                    <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
-                    <p className="text-xs text-slate-500">
-                      Published {new Date(post.published_at).toLocaleDateString()}
-                    </p>
+                <article key={post.id} className="border-b pb-12 last:border-b-0">
+                  <div className="mb-6">
+                    <Link
+                      href={`/posts/${post.slug}`}
+                      className="group"
+                    >
+                      <h2 className="text-3xl font-serif font-bold mb-3 text-slate-900 group-hover:text-blue-600 transition">
+                        {post.title}
+                      </h2>
+                    </Link>
+                    <div className="flex items-center gap-4 text-sm text-slate-600">
+                      <span>{new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                      {post.stance && (
+                        <span className="font-medium px-3 py-1 rounded-full bg-slate-100 text-slate-700">
+                          {post.stance}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Macro & Framework Connections */}
                   {post.macro_framework && (
-                    <div className="mb-6 border-l-4 border-blue-400 bg-blue-50 p-4 rounded">
-                      <h3 className="font-bold text-sm text-blue-900 mb-3">📊 Macro & Framework Connections</h3>
-                      <div className="prose prose-sm max-w-none text-slate-700 whitespace-pre-wrap text-sm">
+                    <div className="mb-8 border-l-4 border-blue-500 bg-blue-50 px-6 py-5 rounded-r-lg">
+                      <h3 className="font-bold text-sm text-blue-900 mb-4 uppercase tracking-wide">📊 Macro & Framework</h3>
+                      <div className="text-slate-800 leading-7 whitespace-pre-wrap font-serif text-base">
                         {post.macro_framework}
                       </div>
                     </div>
@@ -127,36 +139,37 @@ export default function Show({ ticker, card, posts, sectors }: { ticker: string;
 
                   {/* Consensus Thesis */}
                   {post.consensus_thesis && (
-                    <div className="mb-6 border-l-4 border-green-400 bg-green-50 p-4 rounded">
-                      <h3 className="font-bold text-sm text-green-900 mb-3">✅ Consensus Thesis</h3>
-                      <div className="prose prose-sm max-w-none text-slate-700 whitespace-pre-wrap text-sm">
+                    <div className="mb-8 border-l-4 border-green-500 bg-green-50 px-6 py-5 rounded-r-lg">
+                      <h3 className="font-bold text-sm text-green-900 mb-4 uppercase tracking-wide">✅ Consensus Thesis</h3>
+                      <div className="text-slate-800 leading-7 whitespace-pre-wrap font-serif text-base">
                         {post.consensus_thesis}
                       </div>
                     </div>
                   )}
 
-                  {/* Full Article */}
-                  {post.body && !post.consensus_thesis && (
-                    <div className="bg-slate-50 p-4 rounded border">
-                      <h3 className="font-bold text-sm text-slate-900 mb-3">Full Research</h3>
-                      <div className="prose prose-sm max-w-none text-slate-700 whitespace-pre-wrap text-sm overflow-auto max-h-96">
-                        {post.body}
+                  {/* Full Article Preview */}
+                  {post.body && (
+                    <div className="mb-6">
+                      <div className="text-slate-800 leading-8 whitespace-pre-wrap font-serif text-base max-w-2xl">
+                        {post.body.split('\n').slice(0, 20).join('\n')}
+                        {post.body.split('\n').length > 20 && (
+                          <div className="mt-6">
+                            <Link
+                              href={`/posts/${post.slug}`}
+                              className="inline-block px-6 py-2 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition"
+                            >
+                              Read Full Article →
+                            </Link>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  )}
-
-                  {post.stance && (
-                    <div className="mt-4 pt-4 border-t">
-                      <span className="text-xs font-medium px-2 py-1 rounded bg-slate-200 text-slate-700">
-                        Stance: {post.stance}
-                      </span>
                     </div>
                   )}
                 </article>
               ))
             ) : (
-              <div className="text-center py-12">
-                <p className="text-slate-600">No research articles found for this ticker.</p>
+              <div className="text-center py-16">
+                <p className="text-slate-600 text-lg">No research articles found for this ticker.</p>
               </div>
             )}
           </div>

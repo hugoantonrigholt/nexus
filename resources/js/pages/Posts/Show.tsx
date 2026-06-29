@@ -40,59 +40,82 @@ export default function Show({ post }: { post: any }) {
     <>
       <Head title={post.title} />
       <AppLayout>
-        <article className="max-w-2xl mx-auto py-8">
-          <header className="mb-8">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
-                <div className="flex items-center gap-4 text-sm text-slate-600">
-                  <Link href={`/users/${post.author.id}`} className="hover:text-blue-600">
-                    By {post.author.name}
-                  </Link>
-                  {post.published_at && (
-                    <span>
-                      {formatDistanceToNow(new Date(post.published_at), { addSuffix: true })}
-                    </span>
-                  )}
-                  {!isPublished && <span className="text-amber-600 font-medium">Draft</span>}
-                </div>
-              </div>
+        <article className="max-w-3xl mx-auto py-12 px-4">
+          <header className="mb-12">
+            <h1 className="text-5xl font-serif font-bold mb-6 text-slate-900">{post.title}</h1>
 
-              {isAuthor && (
-                <div className="flex gap-2">
-                  <Link href={`/posts/${post.slug}/edit`}>
-                    <Button size="sm" variant="outline">
-                      Edit
-                    </Button>
-                  </Link>
-                  <Button size="sm" variant="destructive" onClick={handleDelete}>
-                    Delete
-                  </Button>
-                </div>
+            <div className="flex items-center gap-6 mb-6 text-sm text-slate-600 border-b pb-6">
+              <Link href={`/users/${post.author.id}`} className="font-medium hover:text-blue-600">
+                {post.author.name}
+              </Link>
+              {post.published_at && (
+                <span>
+                  {new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </span>
+              )}
+              {!isPublished && <span className="text-amber-600 font-medium">Draft</span>}
+              {post.stance && (
+                <span className="font-medium px-3 py-1 rounded-full bg-slate-100 text-slate-700">
+                  {post.stance}
+                </span>
               )}
             </div>
 
             <div className="flex gap-2 flex-wrap">
               {post.ticker && (
-                <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded text-sm font-medium">
+                <span className="inline-block px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
                   {post.ticker}
                 </span>
               )}
               {post.sector && (
-                <span className="inline-block px-3 py-1 bg-slate-200 text-slate-800 rounded text-sm font-medium">
+                <span className="inline-block px-4 py-2 bg-slate-200 text-slate-800 rounded-full text-sm font-medium">
                   {post.sector.name}
                 </span>
               )}
-              <span className="inline-block px-3 py-1 bg-slate-100 text-slate-600 rounded text-sm">
-                {post.visibility === 'public' ? 'Public' : 'Members only'}
+              <span className="inline-block px-4 py-2 bg-slate-100 text-slate-700 rounded-full text-sm">
+                {post.visibility === 'public' ? '🔓 Public' : '🔒 Members only'}
               </span>
             </div>
+
+            {isAuthor && (
+              <div className="flex gap-2 mt-6">
+                <Link href={`/posts/${post.slug}/edit`}>
+                  <Button size="sm" variant="outline">
+                    Edit
+                  </Button>
+                </Link>
+                <Button size="sm" variant="destructive" onClick={handleDelete}>
+                  Delete
+                </Button>
+              </div>
+            )}
           </header>
 
-          <div
-            className="prose prose-lg max-w-none mb-8"
-            dangerouslySetInnerHTML={{ __html: post.body }}
-          />
+          {/* Macro & Framework Connections */}
+          {post.macro_framework && (
+            <div className="mb-8 border-l-4 border-blue-500 bg-blue-50 px-6 py-5 rounded-r-lg">
+              <h3 className="font-bold text-sm text-blue-900 mb-4 uppercase tracking-wide">📊 Macro & Framework</h3>
+              <div className="text-slate-800 leading-7 whitespace-pre-wrap font-serif text-base">
+                {post.macro_framework}
+              </div>
+            </div>
+          )}
+
+          {/* Consensus Thesis */}
+          {post.consensus_thesis && (
+            <div className="mb-8 border-l-4 border-green-500 bg-green-50 px-6 py-5 rounded-r-lg">
+              <h3 className="font-bold text-sm text-green-900 mb-4 uppercase tracking-wide">✅ Consensus Thesis</h3>
+              <div className="text-slate-800 leading-7 whitespace-pre-wrap font-serif text-base">
+                {post.consensus_thesis}
+              </div>
+            </div>
+          )}
+
+          <div className="mb-12 max-w-2xl">
+            <div className="text-slate-800 leading-8 font-serif text-base whitespace-pre-wrap">
+              {post.body}
+            </div>
+          </div>
 
           {auth.user && (
             <section className="border-t pt-8">
