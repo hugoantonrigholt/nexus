@@ -14,8 +14,8 @@ export default function Index({ chains }: { chains: any[] }) {
       <Head title="Value Chains" />
       <AppLayout
         breadcrumbs={[
-          { title: 'Feed', href: { url: '/feed' } },
-          { title: 'Value Chains', href: { url: '/value-chains' } },
+          { title: 'Feed', href: '/feed' },
+          { title: 'Value Chains', href: '/value-chains' },
         ]}
       >
         <div className="max-w-5xl mx-auto py-8 px-4">

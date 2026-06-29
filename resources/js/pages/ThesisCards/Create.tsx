@@ -38,8 +38,8 @@ export default function Create({ themes }: { themes: any[] }) {
       <Head title="New Thesis Card" />
       <AppLayout
         breadcrumbs={[
-          { title: 'Thesis Cards', href: { url: '/thesis-cards' } },
-          { title: 'New Card', href: { url: '/thesis-cards/create' } },
+          { title: 'Thesis Cards', href: '/thesis-cards' },
+          { title: 'New Card', href: '/thesis-cards/create' },
         ]}
       >
         <div className="max-w-2xl mx-auto py-8 px-4">

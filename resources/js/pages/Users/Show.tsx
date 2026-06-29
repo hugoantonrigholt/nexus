@@ -9,8 +9,8 @@ export default function Show({ author, posts }: { author: any; posts: any }) {
       <Head title={author.name} />
       <AppLayout
         breadcrumbs={[
-          { title: 'Feed', href: { url: '/feed' } },
-          { title: author.name, href: { url: `/users/${author.id}` } },
+          { title: 'Feed', href: '/feed' },
+          { title: author.name, href: `/users/${author.id}` },
         ]}
       >
         <div className="max-w-4xl mx-auto py-8">

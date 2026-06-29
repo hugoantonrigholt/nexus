@@ -9,8 +9,8 @@ export default function Show({ ticker, card, posts, sectors }: { ticker: string;
       <Head title={ticker} />
       <AppLayout
         breadcrumbs={[
-          { title: 'Feed', href: { url: '/feed' } },
-          { title: ticker, href: { url: `/company/${ticker.toLowerCase()}` } },
+          { title: 'Feed', href: '/feed' },
+          { title: ticker, href: `/company/${ticker.toLowerCase()}` },
         ]}
       >
         <div className="max-w-4xl mx-auto py-8 px-4">

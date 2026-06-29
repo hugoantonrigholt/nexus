@@ -23,8 +23,8 @@ export default function Edit({ card, themes }: { card: any; themes: any[] }) {
       <Head title={`Edit ${card.ticker}`} />
       <AppLayout
         breadcrumbs={[
-          { title: 'Thesis Cards', href: { url: '/thesis-cards' } },
-          { title: card.ticker, href: { url: `/thesis-cards/${card.id}/edit` } },
+          { title: 'Thesis Cards', href: '/thesis-cards' },
+          { title: card.ticker, href: `/thesis-cards/${card.id}/edit` },
         ]}
       >
         <div className="max-w-2xl mx-auto py-8 px-4">

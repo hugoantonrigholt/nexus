@@ -15,9 +15,9 @@ export default function Show({ theme, cards }: { theme: any; cards: any[] }) {
       <Head title={theme.name} />
       <AppLayout
         breadcrumbs={[
-          { title: 'Feed', href: { url: '/feed' } },
-          { title: 'Thesis Cards', href: { url: '/thesis-cards' } },
-          { title: theme.name, href: { url: `/themes/${theme.slug}` } },
+          { title: 'Feed', href: '/feed' },
+          { title: 'Thesis Cards', href: '/thesis-cards' },
+          { title: theme.name, href: `/themes/${theme.slug}` },
         ]}
       >
         <div className="max-w-6xl mx-auto py-8 px-4">

@@ -160,9 +160,9 @@ export default function Show({ chain, sectors }: { chain: any; sectors: any[] })
       <Head title={chain.name} />
       <AppLayout
         breadcrumbs={[
-          { title: 'Feed', href: { url: '/feed' } },
-          { title: 'Value Chains', href: { url: '/value-chains' } },
-          { title: chain.name, href: { url: `/value-chains/${chain.id}` } },
+          { title: 'Feed', href: '/feed' },
+          { title: 'Value Chains', href: '/value-chains' },
+          { title: chain.name, href: `/value-chains/${chain.id}` },
         ]}
       >
         <article className="max-w-5xl mx-auto py-8 px-4">

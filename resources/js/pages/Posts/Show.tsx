@@ -39,7 +39,12 @@ export default function Show({ post }: { post: any }) {
   return (
     <>
       <Head title={post.title} />
-      <AppLayout>
+      <AppLayout
+        breadcrumbs={[
+          { title: 'Feed', href: '/feed' },
+          { title: post.title, href: `/posts/${post.slug}` },
+        ]}
+      >
         <article className="max-w-3xl mx-auto py-12 px-4">
           <header className="mb-12">
             <h1 className="text-5xl font-serif font-bold mb-6 text-slate-900">{post.title}</h1>

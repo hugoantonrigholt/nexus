@@ -9,8 +9,8 @@ export default function Show({ sector, posts, relatedTickers }: { sector: any; p
       <Head title={sector.name} />
       <AppLayout
         breadcrumbs={[
-          { title: 'Feed', href: { url: '/feed' } },
-          { title: sector.name, href: { url: `/sectors/${sector.slug}` } },
+          { title: 'Feed', href: '/feed' },
+          { title: sector.name, href: `/sectors/${sector.slug}` },
         ]}
       >
         <div className="max-w-4xl mx-auto py-8">

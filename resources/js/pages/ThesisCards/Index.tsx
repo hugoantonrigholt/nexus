@@ -32,8 +32,8 @@ export default function Index({ cards, themes, filters, search, sort, direction 
       <Head title="Thesis Cards" />
       <AppLayout
         breadcrumbs={[
-          { title: 'Feed', href: { url: '/feed' } },
-          { title: 'Thesis Cards', href: { url: '/thesis-cards' } },
+          { title: 'Feed', href: '/feed' },
+          { title: 'Thesis Cards', href: '/thesis-cards' },
         ]}
       >
         <div className="max-w-6xl mx-auto py-8 px-4">
