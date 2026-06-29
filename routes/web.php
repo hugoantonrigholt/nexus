@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SectorController;
 use App\Http\Controllers\Teams\TeamInvitationController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +19,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('posts/{post:slug}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::patch('posts/{post:slug}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('posts/{post:slug}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+    Route::get('sectors/{sector:slug}', [SectorController::class, 'show'])->name('sectors.show');
+    Route::get('companies/{ticker}', [CompanyController::class, 'show'])->name('companies.show');
+    Route::get('users/{user}', [UserController::class, 'show'])->name('users.show');
 });
 
 Route::prefix('{current_team}')

@@ -1,8 +1,7 @@
 import { Head, Link, router } from '@inertiajs/react'
 import AppLayout from '@/layouts/app-layout'
 import { Button } from '@/components/ui/button'
-import { formatDistanceToNow } from 'date-fns'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Select,
   SelectContent,
@@ -10,10 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import PostCard from '@/components/post-card'
 
-export default function Index({ posts, sectors }: { posts: any; sectors: any[] }) {
-  const [sectorFilter, setSectorFilter] = useState('')
-  const [tickerFilter, setTickerFilter] = useState('')
+export default function Index({ posts, sectors, filters = {} }: { posts: any; sectors: any[]; filters?: any }) {
+  const [sectorFilter, setSectorFilter] = useState(filters.sector_id || '')
+  const [tickerFilter, setTickerFilter] = useState(filters.ticker || '')
 
   const handleFilter = () => {
     router.get('/feed', {
@@ -74,33 +74,7 @@ export default function Index({ posts, sectors }: { posts: any; sectors: any[] }
           <div className="space-y-4">
             {posts.data.length > 0 ? (
               posts.data.map((post: any) => (
-                <Link
-                  key={post.id}
-                  href={`/posts/${post.slug}`}
-                  className="block p-4 border rounded-lg hover:border-slate-400 transition"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h2 className="text-xl font-bold hover:text-blue-600">{post.title}</h2>
-                      <p className="text-slate-600 text-sm mt-1">
-                        By {post.author.name} •{' '}
-                        {formatDistanceToNow(new Date(post.published_at), { addSuffix: true })}
-                      </p>
-                      <div className="flex gap-2 mt-2">
-                        {post.ticker && (
-                          <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded font-medium">
-                            {post.ticker}
-                          </span>
-                        )}
-                        {post.sector && (
-                          <span className="px-2 py-1 bg-slate-200 text-slate-700 text-xs rounded font-medium">
-                            {post.sector.name}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </Link>
+                <PostCard key={post.id} post={post} />
               ))
             ) : (
               <div className="text-center py-12">

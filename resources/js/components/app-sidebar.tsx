@@ -20,6 +20,7 @@ import type { NavItem } from '@/types';
 export function AppSidebar() {
     const page = usePage();
     const auth = page.props.auth as any;
+    const sectors = page.props.sectors as any[];
     const dashboardUrl = page.props.currentTeam
         ? dashboard(page.props.currentTeam.slug)
         : '/';
@@ -46,6 +47,11 @@ export function AppSidebar() {
             icon: Settings,
         }] : []),
     ];
+
+    const sectorNavItems: NavItem[] = (sectors || []).map((sector) => ({
+        title: sector.name,
+        href: `/sectors/${sector.slug}`,
+    }));
 
     const footerNavItems: NavItem[] = [
         {
@@ -81,6 +87,9 @@ export function AppSidebar() {
 
             <SidebarContent>
                 <NavMain items={mainNavItems} />
+                {sectorNavItems.length > 0 && (
+                    <NavMain items={sectorNavItems} label="Sectors" />
+                )}
             </SidebarContent>
 
             <SidebarFooter>

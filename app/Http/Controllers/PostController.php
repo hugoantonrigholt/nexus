@@ -9,16 +9,20 @@ use Inertia\Inertia;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::where('published_at', '!=', null)
+        $posts = Post::whereNotNull('published_at')
             ->with('author', 'sector')
+            ->when($request->sector_id, fn($q, $v) => $q->where('sector_id', $v))
+            ->when($request->ticker, fn($q, $v) => $q->where('ticker', strtoupper($v)))
             ->latest('published_at')
-            ->paginate(15);
+            ->paginate(15)
+            ->withQueryString();
 
         return Inertia::render('Posts/Index', [
             'posts' => $posts,
             'sectors' => Sector::all(),
+            'filters' => $request->only(['sector_id', 'ticker']),
         ]);
     }
 

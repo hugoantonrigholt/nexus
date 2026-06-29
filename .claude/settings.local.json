@@ -3,7 +3,9 @@
     "allow": [
       "Bash(php artisan *)",
       "Bash(composer require *)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(git fetch *)",
+      "Bash(npm run *)"
     ]
   }
 }

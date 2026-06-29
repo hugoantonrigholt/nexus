@@ -25,7 +25,9 @@ export default function Show({ post }: { post: any }) {
               <div>
                 <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
                 <div className="flex items-center gap-4 text-sm text-slate-600">
-                  <span>By {post.author.name}</span>
+                  <Link href={`/users/${post.author.id}`} className="hover:text-blue-600">
+                    By {post.author.name}
+                  </Link>
                   {post.published_at && (
                     <span>
                       {formatDistanceToNow(new Date(post.published_at), { addSuffix: true })}
