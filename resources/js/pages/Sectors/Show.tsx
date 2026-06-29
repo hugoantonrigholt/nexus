@@ -49,7 +49,7 @@ export default function Show({ sector, posts, relatedTickers }: { sector: any; p
                   {relatedTickers.map((ticker) => (
                     <Link
                       key={ticker}
-                      href={`/companies/${ticker}`}
+                      href={`/company/${ticker.toLowerCase()}`}
                       className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded font-medium hover:bg-blue-200"
                     >
                       {ticker}

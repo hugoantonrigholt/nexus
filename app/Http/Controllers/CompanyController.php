@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\ThesisCard;
 use Inertia\Inertia;
 
 class CompanyController extends Controller
 {
-    public function show(string $ticker)
+    public function show(string $id)
     {
-        $ticker = strtoupper($ticker);
+        $ticker = strtoupper($id);
 
         $posts = Post::whereNotNull('published_at')
             ->where('ticker', $ticker)
@@ -20,6 +21,8 @@ class CompanyController extends Controller
         if ($posts->isEmpty()) {
             abort(404);
         }
+
+        $card = ThesisCard::where('ticker', $ticker)->with('themeRelation', 'sector')->first();
 
         $sectors = Post::whereNotNull('published_at')
             ->where('ticker', $ticker)
@@ -33,6 +36,7 @@ class CompanyController extends Controller
 
         return Inertia::render('Companies/Show', [
             'ticker' => $ticker,
+            'card' => $card,
             'posts' => $posts,
             'sectors' => $sectors,
         ]);

@@ -27,12 +27,8 @@ export default function Index({ chains }: { chains: any[] }) {
           <div className="space-y-4">
             {chains && chains.length > 0 ? (
               chains.map((chain: any) => {
-                const heldCount = chain.layers.reduce((acc: number, layer: any) =>
-                  acc + layer.entries.filter((e: any) => e.own === 'HELD').length, 0)
-                const watchCount = chain.layers.reduce((acc: number, layer: any) =>
-                  acc + layer.entries.filter((e: any) => e.own === 'WATCH').length, 0)
-                const noneCount = chain.layers.reduce((acc: number, layer: any) =>
-                  acc + layer.entries.filter((e: any) => e.own === 'NONE').length, 0)
+                const entryCount = chain.layers.reduce((acc: number, layer: any) =>
+                  acc + (layer.entries?.length || 0), 0)
                 const gapCount = chain.layers.filter((l: any) => l.gap).length
 
                 return (
@@ -64,19 +60,7 @@ export default function Index({ chains }: { chains: any[] }) {
                     <p className="text-sm text-slate-700 mb-3 line-clamp-2">{chain.thesis}</p>
 
                     <div className="flex items-center gap-4 text-xs text-slate-600">
-                      <span>
-                        <span className="inline-block w-2 h-2 rounded-full bg-blue-500 mr-1 align-middle" />
-                        {heldCount} held
-                      </span>
-                      <span>
-                        <span className="inline-block w-2 h-2 rounded-full bg-slate-400 mr-1 align-middle" />
-                        {watchCount} watch
-                      </span>
-                      <span>
-                        <span className="inline-block w-2 h-2 rounded-full bg-amber-500 mr-1 align-middle" />
-                        {noneCount} leads
-                      </span>
-                      <span>{chain.layers.length} layers</span>
+                      <span>{chain.layers.length} layers, {entryCount} entries</span>
                       {gapCount > 0 && (
                         <span className="text-amber-600">
                           ⚠ {gapCount} gap{gapCount !== 1 ? 's' : ''}

@@ -5,7 +5,9 @@
       "Bash(composer require *)",
       "Bash(npm install *)",
       "Bash(git fetch *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(sed 's/:.*$//')",
+      "Bash(composer show *)"
     ]
   }
 }
